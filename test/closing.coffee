@@ -1,8 +1,9 @@
-vows = require 'vows'
+assert = require 'assert'
 child_process = require 'child_process'
+vows = require 'vows'
+
 exec = child_process.exec
 spawn = child_process.spawn
-assert = require 'assert'
 
 describe = (name, bat) -> vows.describe(name).addBatch(bat).export(module)
 

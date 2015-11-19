@@ -1,10 +1,11 @@
-vows = require 'vows'
 assert = require 'assert'
-phantom = require '../phantom'
 express = require 'express'
-temp = require 'temp'
-path = require 'path'
 fs = require 'fs'
+path = require 'path'
+temp = require 'temp'
+vows = require 'vows'
+
+phantom = require '../phantom'
 
 describe = (name, bat) -> vows.describe(name).addBatch(bat).export(module)
 

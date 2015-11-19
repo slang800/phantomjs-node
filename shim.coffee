@@ -1,9 +1,8 @@
 # NOTE: core_require comes from ./pre_shim.js
-webpage = core_require('webpage')
-
-shoe = require('shoe')
-dnode = require('dnode')
-system = core_require('system')
+dnode = require 'dnode'
+shoe = require 'shoe'
+system = core_require 'system'
+webpage = core_require 'webpage'
 
 port = system.args[1]
 hostname = system.args[2]

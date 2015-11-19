@@ -1,5 +1,6 @@
 # Success: Testing for wikipedia
 phantom =  require 'phantom'
+
 phantom.create (ph) ->
   ph.createPage (page) ->
     page.open 'http://en.wikipedia.org/wiki/Main_Page', (status) ->
