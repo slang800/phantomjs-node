@@ -1,5 +1,5 @@
-vows    = require 'vows'
-assert  = require 'assert'
+vows = require 'vows'
+assert = require 'assert'
 phantom = require '../phantom'
 
 describe = (name, bat) -> vows.describe(name).addBatch(bat).export(module)

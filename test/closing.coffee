@@ -1,5 +1,5 @@
-vows    = require 'vows'
-child_process   = require 'child_process'
+vows = require 'vows'
+child_process = require 'child_process'
 exec = child_process.exec
 spawn = child_process.spawn
 assert = require 'assert'

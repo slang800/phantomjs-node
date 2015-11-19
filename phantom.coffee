@@ -1,7 +1,7 @@
-dnode    = require 'dnode'
-http     = require 'http'
-shoe     = require 'shoe'
-spawn    = require 'win-spawn'
+dnode = require 'dnode'
+http = require 'http'
+shoe = require 'shoe'
+spawn = require 'win-spawn'
 
 # the list of phantomjs RPC wrapper
 phanta = []
@@ -35,7 +35,7 @@ process.on(signal, onSignalClean(signal)) for signal in ['SIGINT', 'SIGTERM']
 # functions, but we want the function to make it intact to phantom
 wrap = (ph) ->
   ph.callback = (fn) ->
-    return '__phantomCallback__'+fn.toString()
+    return '__phantomCallback__' + fn.toString()
   ph._createPage = ph.createPage
   ph.createPage = (cb) ->
     ph._createPage (page) ->
@@ -60,9 +60,9 @@ module.exports =
         when 'object' then options = arg
     if typeof options.parameters is 'object'
       for key, value of options.parameters
-        args.push '--'+key+'='+value
+        args.push '--' + key + '=' + value
     options.path ?= ''
-    options.binary ?= options.path+'phantomjs'
+    options.binary ?= options.path + 'phantomjs'
     options.port ?= 0
     options.hostname ?= 'localhost'
     options.dnodeOpts ?= {}

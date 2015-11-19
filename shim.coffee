@@ -2,9 +2,9 @@
 # scratch - boo :(
 webpage = core_require('webpage')
 
-shoe     = require('shoe')
-dnode    = require('dnode')
-system   = core_require('system')
+shoe = require('shoe')
+dnode = require('dnode')
+system = core_require('system')
 
 port = system.args[1]
 hostname = system.args[2]
@@ -43,9 +43,9 @@ transform = (obj) ->
   return obj
 
 
-mkwrap = (src, pass=[], special={}) ->
+mkwrap = (src, pass = [], special = {}) ->
   obj =
-    set: (key, val, cb=->) ->
+    set: (key, val, cb = ->) ->
 
       #Fnwrap so PhantomJS doesn't segfault when it tries to call the callback
       val = fnwrap val if typeof val is "function"
@@ -79,18 +79,18 @@ pageWrap = (page) ->
 
     # this is here to let the user pass in a function that has access to
     # request.abort() and other functions on the request object.
-    onPageCreated:(cb=(->)) ->
+    onPageCreated:(cb = ( -> )) ->
       page.onPageCreated = (newpage) ->
         cb pageWrap newpage
-    onConsoleMessage: (fn, cb=(->)) ->
+    onConsoleMessage: (fn, cb = ( -> )) ->
       page.onConsoleMessage = ->
         fn.apply(this, arguments)
       cb()
-    onError: (fn, cb=(->)) ->
+    onError: (fn, cb = ( -> )) ->
       page.onError = ->
         fn.apply(this, arguments)
       cb()
-    onResourceRequested: (fn, cb=(->), args...) ->
+    onResourceRequested: (fn, cb = ( -> ), args...) ->
       page.onResourceRequested = ->
         # prepare a arguments with the extra args
         argumentsWithExtraArgs = [].slice.apply(arguments).concat(args)
@@ -103,10 +103,10 @@ pageWrap = (page) ->
         x.apply(this, argumentsWithExtraArgs)
         # this function does not have access to request.abort()
         cb.apply(this, argumentsWithExtraArgs)
-    injectJs: (js, cb=->) -> cb page.injectJs js
-    evaluate: (fn, cb=(->), args...) ->
+    injectJs: (js, cb = ->) -> cb page.injectJs js
+    evaluate: (fn, cb=( -> ), args...) ->
       cb page.evaluate.apply(page, [fn].concat(args))
-    render: (file, opts={}, cb) ->
+    render: (file, opts = {}, cb) ->
       unless cb?
         if typeof opts is 'function'
           cb = opts
@@ -116,27 +116,27 @@ pageWrap = (page) ->
 
       page.render file, opts
       cb()
-    getContent: (cb=->) -> cb page.content
-    getCookies: (cb=->) -> cb page.cookies
-    renderBase64: (type, cb=->) -> cb page.renderBase64 type
-    setHeaders: (headers, cb=->) ->
+    getContent: (cb = ->) -> cb page.content
+    getCookies: (cb = ->) -> cb page.cookies
+    renderBase64: (type, cb = ->) -> cb page.renderBase64 type
+    setHeaders: (headers, cb = ->) ->
       page.customHeaders = headers
       cb()
-    setContent: (html, url, cb=->) ->
+    setContent: (html, url, cb = ->) ->
       page.onLoadFinished = (status) ->
         page.onLoadFinished = null
         cb status
       page.setContent html, url
-    setViewportSize: (width, height, cb=->) ->
+    setViewportSize: (width, height, cb = ->) ->
       page.viewportSize = {width:width, height:height}
       cb()
-    setPaperSize: (options, cb=->) ->
+    setPaperSize: (options, cb = ->) ->
       page.paperSize = transform(options)
       cb()
-    setZoomFactor: (zoomFactor, cb=->) ->
+    setZoomFactor: (zoomFactor, cb = ->) ->
       page.zoomFactor = zoomFactor
       cb()
-    setFileOnPicker: (fileName, cb=->) ->
+    setFileOnPicker: (fileName, cb = ->) ->
       page.onFilePicker = ->
         cb.apply(this, arguments)
         fileName
@@ -144,13 +144,13 @@ pageWrap = (page) ->
 
 _phantom = mkwrap phantom,
   ['exit'],
-  injectJs: (js, cb=->) -> cb phantom.injectJs js
-  getCookies: (cb=->) -> cb(phantom.cookies)
-  addCookie: (cookie, cb=->) ->
+  injectJs: (js, cb = ->) -> cb phantom.injectJs js
+  getCookies: (cb = ->) -> cb(phantom.cookies)
+  addCookie: (cookie, cb = ->) ->
     cb(phantom.addCookie(cookie))
-  clearCookies: (cb=->) -> cb phantom.clearCookies()
+  clearCookies: (cb = ->) -> cb phantom.clearCookies()
   createPage: (cb) -> cb pageWrap webpage.create()
-  setProxy: (host, port, type, user, password, cb=->) ->
+  setProxy: (host, port, type, user, password, cb = ->) ->
     cb(phantom.setProxy(host, port, type, user, password))
 
 

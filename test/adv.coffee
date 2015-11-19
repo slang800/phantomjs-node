@@ -1,5 +1,5 @@
-vows    = require 'vows'
-assert  = require 'assert'
+vows = require 'vows'
+assert = require 'assert'
 express = require 'express'
 phantom = require '../phantom'
 

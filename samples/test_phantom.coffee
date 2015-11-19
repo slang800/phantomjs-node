@@ -1,6 +1,6 @@
 # This script demonstrates how phantomjs is used within Nodejs in replacement of
 # JSDOM
-phantom =  require 'phantom'
+phantom = require 'phantom'
 phantom.create (ph) ->
   ph.createPage (page) ->
     URL = 'http://www.mdscollections.com/cat_mds_accessories.cfm'
