@@ -1,5 +1,4 @@
-# Require gets overwritten by browserify, so we have to reimplement it from
-# scratch - boo :(
+# NOTE: core_require comes from ./pre_shim.js
 webpage = core_require('webpage')
 
 shoe = require('shoe')
