@@ -5,8 +5,8 @@ phantom = require 'phantom'
 phantom.create (ph) ->
   # Creates on page
   ph.createPage (page) ->
-    page.open "http://wikitravel.org/en/singapore", (status) ->
-      console.log "opened page? ", status
+    page.open 'http://wikitravel.org/en/singapore', (status) ->
+      console.log 'opened page? ', status
       someFunc = (aaa) ->
         attribute_to_want = aaa
         h2Arr = []

@@ -18,7 +18,7 @@ app = express()
 app.use express.static __dirname
 
 app.get '/', (req, res) ->
-  res.send """
+  res.send '''
     <html>
       <head>
         <title>Test page title</title>
@@ -27,10 +27,10 @@ app.get '/', (req, res) ->
         <iframe src="/inner" name="inner"></iframe>
       </body>
     </html>
-  """
+  '''
 
 app.get '/inner', (req, res) ->
-  res.send """
+  res.send '''
     <html>
       <head>
         <title>Inner page title</title>
@@ -38,19 +38,19 @@ app.get '/inner', (req, res) ->
       <body>
       </body>
     </html>
-  """
+  '''
 
 appServer = app.listen()
 
 
 
-describe "The phantom module (frames)",
-  "Can switch to inner frame on the page":
+describe 'The phantom module (frames)',
+  'Can switch to inner frame on the page':
     topic: t ->
       phantom.create (ph) =>
         @callback null, ph
 
-    "which, when you open a page":
+    'which, when you open a page':
       topic: t (ph) ->
         ph.createPage (page) =>
           page.open "http://127.0.0.1:#{appServer.address().port}/", (status) =>
@@ -58,35 +58,35 @@ describe "The phantom module (frames)",
               @callback null, page, status
             , 1500
 
-      "and extract the inner frame's title":
+      'and extract the inner frame\'s title':
         topic: t (page, status) ->
-          page.switchToFrame("inner")
+          page.switchToFrame('inner')
           page.evaluate (-> document.title), (title) =>
             @callback null, title
 
-        "it is correct": (title) ->
-          assert.equal title, "Inner page title"
+        'it is correct': (title) ->
+          assert.equal title, 'Inner page title'
 
-      "and switch back to parent frame and extract the title":
+      'and switch back to parent frame and extract the title':
         topic: t (page, status) ->
           page.switchToParentFrame()
           page.evaluate (-> document.title), (title) =>
             @callback null, title
 
-        "it is correct": (title) ->
-          assert.equal title, "Test page title"
+        'it is correct': (title) ->
+          assert.equal title, 'Test page title'
 
-      "and switch from inner frame to main frame and extract the title":
+      'and switch from inner frame to main frame and extract the title':
         topic: t (page, status) ->
-          page.switchToFrame("inner")
+          page.switchToFrame('inner')
           page.switchToMainFrame()
           page.evaluate (-> document.title), (title) =>
             @callback null, title
 
-        "it is correct": (title) ->
-          assert.equal title, "Test page title"
+        'it is correct': (title) ->
+          assert.equal title, 'Test page title'
 
-      "succeeds": (err, page, status) ->
+      'succeeds': (err, page, status) ->
         assert.equal status, 'success'
 
     teardown: (ph) ->

@@ -31,37 +31,37 @@ exitPromise = new Promise (resolve) ->
 
   wrapCreate phantom
 
-describe "The phantom module (callbacks)",
-  "Can create an instance":
+describe 'The phantom module (callbacks)',
+  'Can create an instance':
     topic: t ->
       phantom.create {port: 12305}, (ph) =>
         @callback null, ph
 
-    "and can add cookies":
+    'and can add cookies':
       topic: t (ph) ->
         ph.addCookie
-          name: "cookieName"
-          value: "cookieValue"
-          path: "/testPath"
-          domain: "localhost", (status) =>
+          name: 'cookieName'
+          value: 'cookieValue'
+          path: '/testPath'
+          domain: 'localhost', (status) =>
             @callback null, status
 
-      "which succeeds": (status) ->
-        assert.ok status, "addCookie should succeed"
+      'which succeeds': (status) ->
+        assert.ok status, 'addCookie should succeed'
 
-    "and, when getCookies is called,":
+    'and, when getCookies is called,':
       topic: t (ph) ->
         ph.getCookies (cookies) =>
           @callback null, cookies
 
-      "the cookie is available": (cookies) ->
+      'the cookie is available': (cookies) ->
         assert.equal (c for c in cookies when (c) ->
-          c.name is "cookieName" and
-          c.value is "cookieValue" and
-          c.path is "/testPath").length, 1, "cookie must be in phantom.cookies"
+          c.name is 'cookieName' and
+          c.value is 'cookieValue' and
+          c.path is '/testPath').length, 1, 'cookie must be in phantom.cookies'
 
 
-    "which, when you call exit()":
+    'which, when you call exit()':
       topic: t (ph) ->
         countdown = null
 
@@ -75,5 +75,5 @@ describe "The phantom module (callbacks)",
           @callback 'timeout'
         , 500
 
-      "runs the onExit callback within 500ms": (status) ->
+      'runs the onExit callback within 500ms': (status) ->
         assert.equal status, 'success'

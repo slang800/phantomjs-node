@@ -43,7 +43,7 @@ createTopic = (signal, p) ->
   ->
     that = this
     result = ''
-    co = child_process.exec 'node -e "' + p + '"'
+    co = child_process.exec "node -e \"#{p}\""
     cb = ->
     if signal
       cb = ->
@@ -63,35 +63,35 @@ createTopic = (signal, p) ->
 createExitTest = (expect) ->
   (err, [r, pid]) ->
     assert.isNull err
-    assert.deepEqual('Setup\n' + expect, r)
+    assert.deepEqual("Setup\n#{expect}", r)
 
 createExitTestCbLess = (expect) ->
   (err, [r, pid]) ->
     assert.isNull err
-    assert.deepEqual('Setup\n' + expect, r)
+    assert.deepEqual("Setup\n#{expect}", r)
     try
       process.kill(pid)
       assert.fail()
 
-describe "The phantom module",
-  "SIGINT":
-    "with callbacks":
+describe 'The phantom module',
+  'SIGINT':
+    'with callbacks':
       topic: createTopic('SIGINT', program)
-      "exited": createExitTest('SIGINT\nEXIT\n')
-    "without callbacks":
+      'exited': createExitTest('SIGINT\nEXIT\n')
+    'without callbacks':
       topic: createTopic('SIGINT', programCbless)
-      "exited": createExitTestCbLess('')
-  "SIGTERM":
-    "with callbacks":
+      'exited': createExitTestCbLess('')
+  'SIGTERM':
+    'with callbacks':
       topic: createTopic('SIGTERM', program)
-      "exited": createExitTest('SIGTERM\nEXIT\n')
-    "without callbacks":
+      'exited': createExitTest('SIGTERM\nEXIT\n')
+    'without callbacks':
       topic: createTopic('SIGTERM', programCbless)
-      "exited": createExitTestCbLess('')
-  "without signals":
-    "with callbacks":
+      'exited': createExitTestCbLess('')
+  'without signals':
+    'with callbacks':
       topic: createTopic(false, program)
-      "exited": createExitTest('Going out\nEXIT\n')
-    "without callbacks":
+      'exited': createExitTest('Going out\nEXIT\n')
+    'without callbacks':
       topic: createTopic(false, programCbless)
-      "exited": createExitTestCbLess('Going out\n')
+      'exited': createExitTestCbLess('Going out\n')

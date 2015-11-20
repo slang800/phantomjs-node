@@ -22,18 +22,18 @@ descend = (op, obj, key, val) ->
   cur[keys[0]]
 
 _transform = (val) ->
-  if typeof val is "string" and val.indexOf('__phantomCallback__') is 0
+  if typeof val is 'string' and val.indexOf('__phantomCallback__') is 0
     val = 'return ' + val.replace('__phantomCallback__', '')
     val = phantom.callback(new Function(val)())
 
   return val
 
 transform = (obj) ->
-  if typeof obj is "string"
+  if typeof obj is 'string'
     _transform(obj)
-  else if typeof obj is "object"
+  else if typeof obj is 'object'
     for key of obj
-      if typeof obj[key] is "object"
+      if typeof obj[key] is 'object'
         transform(obj[key])
       else
         obj[key] = _transform(obj[key])
@@ -46,7 +46,7 @@ mkwrap = (src, pass = [], special = {}) ->
     set: (key, val, cb = ->) ->
 
       #Fnwrap so PhantomJS doesn't segfault when it tries to call the callback
-      val = fnwrap val if typeof val is "function"
+      val = fnwrap val if typeof val is 'function'
 
       val = transform(val)
 
@@ -152,7 +152,7 @@ _phantom = mkwrap phantom,
     cb(phantom.setProxy(host, port, type, user, password))
 
 
-stream = shoe('http://' + hostname + ':' + port + '/dnode')
+stream = shoe("http://#{hostname}:#{port}/dnode")
 
 d = dnode _phantom
 

@@ -73,7 +73,7 @@ module.exports =
     httpServer = http.createServer()
     httpServer.listen options.port, options.hostname
 
-    httpServer.on "error", (err) ->
+    httpServer.on 'error', (err) ->
       if cb?
         cb null, err
       else
@@ -93,7 +93,7 @@ module.exports =
       ps.on 'error', (err) ->
         httpServer.close()
         if err?.code is 'ENOENT'
-          console.error "phantomjs-node: You don't have 'phantomjs' installed"
+          console.error 'phantom: You don\'t have \'phantomjs\' installed'
         if cb?
           cb null, err
         else
